@@ -2,7 +2,7 @@ module SpreePaypalWebsiteStandard
   module Generators
     class InstallGenerator < Rails::Generators::Base
       def add_migrations
-        run 'bundle exec rake railties:install:migrations FROM=spree_paypal_website_standard'
+        run 'bundle exec rake railties:install:migrations FROM=spree_pag_seguro'
       end
 
       def run_migrations

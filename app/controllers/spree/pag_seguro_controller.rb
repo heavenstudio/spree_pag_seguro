@@ -1,5 +1,5 @@
 module Spree
-  class PaypalController < Spree::CheckoutController
+  class PagSeguroController < Spree::CheckoutController
     protect_from_forgery :except => [:confirm]
     skip_before_filter :persist_gender
     

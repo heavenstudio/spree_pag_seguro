@@ -4,18 +4,13 @@ module Spree
     skip_before_filter :restriction_access
     
     def create
-      if(Spree::PaypalWebsiteStandard::Config.encrypted && (params[:secret] != Spree::PaypalWebsiteStandard::Config.ipn_secret))
-        logger.info "PayPal_Website_Standard: attempt to send an IPN with invalid secret"
-        raise Exception
-      end
-      
       @order = Spree::Order.find_by_number(params[:invoice])
       Spree::PaymentNotification.create!(:params => params,
         :order_id => @order.id,
         :status => params[:payment_status],
         :transaction_id => params[:txn_id])
       
-      logger.info "PayPal_Website_Standard: processing payment notification for invoice #{params["invoice"]}, amount is #{params["mc_gross"]} #{params["mc_currency"]}"
+      logger.info "PagSeguro: processing payment notification for invoice #{params["invoice"]}, amount is #{params["mc_gross"]} #{params["mc_currency"]}"
       # this logging stuff won't live here for long...
       
       Order.transaction do
@@ -31,14 +26,14 @@ module Spree
         # which might lead to lots of false "credit owed" payment states
         # (when they should be "complete")
         payment.amount = order.read_attribute(:total)
-        logger.info "PayPal_Website_Standard: set payment.amount to #{payment.amount} based on order's total #{order.read_attribute(:total)}"
+        logger.info "PagSeguro: set payment.amount to #{payment.amount} based on order's total #{order.read_attribute(:total)}"
         
-        payment.payment_method = Spree::Order.paypal_payment_method
+        payment.payment_method = Spree::Order.pag_seguro_payment_method
         order.payments << payment
         payment.started_processing
         
         order.payment.complete
-        logger.info("PayPal_Website_Standard: order #{order.number} (#{order.id}) -- completed payment")
+        logger.info("PagSeguro: order #{order.number} (#{order.id}) -- completed payment")
 
         until @order.state == "complete"
           if @order.next!
@@ -47,7 +42,7 @@ module Spree
           end
         end
 
-        logger.info("PayPal_Website_Standard: Order #{order.number} (#{order.id}) updated successfully, IPN complete")
+        logger.info("PagSeguro: Order #{order.number} (#{order.id}) updated successfully")
       end
       
       render :nothing => true
@@ -64,8 +59,8 @@ module Spree
     end
     
     def before_address
-      @order.bill_address ||= Address.new(:country => default_country)
-      @order.ship_address ||= Address.new(:country => default_country)
+      @order.bill_address ||= Address.new
+      @order.ship_address ||= Address.new
     end
     
     def before_delivery
@@ -80,10 +75,5 @@ module Spree
     def after_complete
       session[:order_id] = nil
     end
-    
-    def default_country
-      Country.find Spree::PaypalWebsiteStandard::Config.default_country_id
-    end
-    
   end
 end
