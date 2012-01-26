@@ -1,0 +1,10 @@
+--- 
+pt-BR: 
+  please_select_your_country: "Por favor, escolha seu país"
+  please_enter_valid_zip: "Por favor, coloque seu código postal."
+  zip_code_if_you_have_one: "Código postal" 
+  payment_failure: "Falha no Pagamento"
+  payment_pending: "Payment Pendente"
+  check_out_with_pag_seguro: "Compre com o PagSeguro"
+  pag_seguro_payment_received: "Obrigado. Nós recebemos seu pagamento para a órdem de compra. Sua compra será entregue em breve."
+  pag_seguro_order_processed_successfully: "Obrigado. Sua compra foi processada com sucesso. Você será notificado assim que recebermos o comprovante de pagamento do PagSeguro"
