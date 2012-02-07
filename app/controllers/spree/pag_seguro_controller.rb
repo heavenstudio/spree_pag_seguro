@@ -3,7 +3,7 @@ module Spree
     protect_from_forgery :except => [:confirm]
     skip_before_filter :persist_gender
     
-    def confirm
+    def notify
       email = Spree::PagSeguro::Config.email
       token = Spree::PagSeguro::Config.token
       notification_code = params[:notificationCode]
