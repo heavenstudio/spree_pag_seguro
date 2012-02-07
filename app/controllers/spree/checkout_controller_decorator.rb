@@ -8,7 +8,7 @@ Spree::CheckoutController.class_eval do
         payment.amount = @order.total
         payment.payment_method = Spree::Order.pag_seguro_payment_method
         @order.payments << payment
-        pag_seguro_payment = PagSeguro::Payment.new(Spree::PagSeguro::Config.email, Spree::PagSeguro::Config.token, redirect_url: Spree::PagSeguro::Config.redirect_url)
+        pag_seguro_payment = PagSeguro::Payment.new(Spree::PagSeguro::Config.email, Spree::PagSeguro::Config.token, redirect_url: "#{root_url}/pag_seguro/callback")
        
         pag_seguro_payment.items = @order.line_items.collect do |item|
           PagSeguro::Item.new(
