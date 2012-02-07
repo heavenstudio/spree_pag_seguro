@@ -4,24 +4,14 @@ module Spree
     skip_before_filter :persist_gender
     
     def confirm
-      unless current_order
-        redirect_to root_path
-      else
-        order = current_order
-        if (order.payment_state == "paid") or (order.payment_state == "credit_owed")
-          flash[:notice] = t(:pag_seguro_payment_received)
-          state_callback(:after)
-        else
-          while order.state != "complete"
-            order.next
-            state_callback(:after)
-          end
-          flash[:notice] = t(:pag_seguro_order_processed_successfully)
-          flash[:commerce_tracking] = "nothing special"
-        end
-        redirect_to order_path(current_order)
+      email = Spree::PagSeguro::Config.email
+      token = Spree::PagSeguro::Config.token
+      notification_code = params[:notificationCode]
+      notification = PagSeguro::Notification.new(email, token, notification_code)
+      raise notification.inspect
+      if notification.approved?
+        order = Spree::Order.find(notification.id)
       end
     end
-  
   end
 end
