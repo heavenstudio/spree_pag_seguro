@@ -13,12 +13,12 @@ Gem::Specification.new do |s|
   s.email             = 'tomekrs@o2.pl'
   s.homepage          = 'http://github.com/heavenstudio/spree-pag_seguro'
 
-  s.files        = Dir['CHANGELOG', 'README.md', 'LICENSE', 'lib/**/*', 'app/**/*']
+  s.files        = Dir['CHANGELOG', 'README.md', 'LICENSE', 'lib/**/*', 'app/**/*', 'config/**/*', 'db/**/*', 'spec/**/*']
   s.require_path = 'lib'
   s.requirements << 'none'
 
   s.add_dependency 'spree_core', '>= 1.0.0.rc1'
-  s.add_dependency 'pag_seguro', '0.1.1'
+  s.add_dependency 'pag_seguro', '>= 0.1.1'
 
   s.add_development_dependency 'capybara', '1.0.1'
   s.add_development_dependency 'factory_girl'
