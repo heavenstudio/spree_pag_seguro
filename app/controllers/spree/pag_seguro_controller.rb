@@ -8,10 +8,13 @@ module Spree
       token = Spree::PagSeguro::Config.token
       notification_code = params[:notificationCode]
       notification = PagSeguro::Notification.new(email, token, notification_code)
-      raise notification.inspect
+      raise "###########################\n\n\n\n\n#{notification.inspect}\n\n\n\n\n###########################"
       if notification.approved?
         order = Spree::Order.find(notification.id)
       end
+    end
+    
+    def callback
     end
   end
 end
