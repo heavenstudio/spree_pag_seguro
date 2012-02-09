@@ -8,6 +8,9 @@ module Spree
       notification_code = params[:notificationCode]
       notification = ::PagSeguro::Notification.new(email, token, notification_code)
       
+      logger.info "PagSeguro Notification code: #{notification_code}\n\n\n"
+      logger.info "PagSeguro Notification inspect:\n#{notification.inspect}"
+      
       if notification.approved?
         order = Spree::Order.find(notification.id)
       end
