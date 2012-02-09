@@ -15,7 +15,7 @@ module Spree
         order = Spree::Order.find(notification.id)
         order.payment.complete
       end
-      render head: :ok
+      render nothing: true, head: :ok
     end
     
     def callback
