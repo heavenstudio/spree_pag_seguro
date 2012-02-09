@@ -1,5 +1,5 @@
 module Spree
-  class PagSeguroController < ApplicationController
+  class PagSeguroController < Spree::BaseController
     protect_from_forgery :except => [:notify]
     
     def notify
@@ -16,6 +16,7 @@ module Spree
       if notification.approved?
         order = Spree::Order.find(notification.id)
       end
+      render head: :ok
     end
     
     def callback
