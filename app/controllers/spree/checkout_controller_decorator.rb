@@ -17,7 +17,7 @@ Spree::CheckoutController.class_eval do
         pag_seguro_payment.items = @order.line_items.collect do |item|
           PagSeguro::Item.new(
             id: item.id,
-            description: item.product.description,
+            description: "#{item.product.name} - #{item.product.description}"  ,
             amount: format("%.2f", item.price.round(2)),
             quantity: item.quantity,
             weight: item.product.weight,

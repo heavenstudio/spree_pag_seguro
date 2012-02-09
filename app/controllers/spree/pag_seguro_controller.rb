@@ -15,6 +15,7 @@ module Spree
       
       if notification.approved?
         order = Spree::Order.find(notification.id)
+        order.payment.complete
       end
       render head: :ok
     end
