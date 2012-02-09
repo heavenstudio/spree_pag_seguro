@@ -3,6 +3,8 @@ module Spree
     protect_from_forgery :except => [:notify]
     
     def notify
+      raise params.inspect
+      
       email = Spree::PagSeguro::Config.email
       token = Spree::PagSeguro::Config.token
       notification_code = params[:notificationCode]
