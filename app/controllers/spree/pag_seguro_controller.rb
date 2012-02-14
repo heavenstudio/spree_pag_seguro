@@ -13,7 +13,7 @@ module Spree
       
       if notification.approved?
         order = Spree::Order.find(notification.id)
-        order.next while order.state != 'delivery'
+        order.next while order.state != 'confirm'
         order.payment.complete
         order.next while order.state != 'complete'
       end
