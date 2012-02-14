@@ -13,12 +13,9 @@ module Spree
       
       if notification.approved?
         order = Spree::Order.find(notification.id)
-#        while order.payment.state != 'complete'
-#          order.payment.next
-#        end
-        while order.state != 'complete'
-          order.next
-        end
+        order.next while order.state != 'delivery'
+        order.payment.complete
+        order.next while order.state != 'complete'
       end
       render nothing: true, head: :ok
     end
