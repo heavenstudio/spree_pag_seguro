@@ -8,19 +8,22 @@ Spree::CheckoutController.class_eval do
         payment.amount = @order.total
         payment.payment_method = Spree::Order.pag_seguro_payment_method
         @order.payments << payment
+        
+        redirect_url = Rails.env.development? ? nil : "#{root_url}pag_seguro/callback"
+        
         pag_seguro_payment = PagSeguro::Payment.new(
-          Spree::PagSeguro::Config.email,
-          Spree::PagSeguro::Config.token,
-          redirect_url: "#{root_url}/pag_seguro/callback",
+          Spree::Order.pag_seguro_payment_method.preferred_email,
+          Spree::Order.pag_seguro_payment_method.preferred_token,
+          redirect_url: redirect_url,
           id: @order.id)
        
-        pag_seguro_payment.items = @order.line_items.collect do |item|
+        pag_seguro_payment.items = @order.line_items.map do |item|
           PagSeguro::Item.new(
             id: item.id,
             description: item.product.name,
             amount: format("%.2f", item.price.round(2)),
             quantity: item.quantity,
-            weight: item.product.weight,
+            weight: ( item.product.weight * 1000 ).to_i
           )
         end
        

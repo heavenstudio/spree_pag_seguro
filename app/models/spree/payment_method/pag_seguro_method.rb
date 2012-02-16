@@ -1,5 +1,8 @@
 module Spree
   class PaymentMethod::PagSeguroMethod < PaymentMethod
+    preference :email, :string
+    preference :token, :string
+    
     def actions
       %w{capture void}
     end

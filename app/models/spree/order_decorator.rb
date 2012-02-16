@@ -6,11 +6,10 @@ Spree::Order.class_eval do
   end
   
   def payable_via_pag_seguro?
-    # !!self.class.pag_seguro_payment_method
-    true
+    !!self.class.pag_seguro_payment_method
   end
   
   def self.pag_seguro_payment_method
-    Spree::PaymentMethod.select{ |pm| pm.name.downcase =~ /pag_seguro/}.first
+    Spree::PaymentMethod.where(type: "Spree::PaymentMethod::PagSeguroMethod").first
   end
 end
