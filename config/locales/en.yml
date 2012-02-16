@@ -1,0 +1,10 @@
+--- 
+en: 
+  please_select_your_country: "Please select your country"
+  please_enter_valid_zip: "Please enter a valid zipcode."
+  zip_code_if_you_have_one: "Zipcode (if you have one)" 
+  payment_failure: "Payment Failure"
+  payment_pending: "Payment Pending"
+  check_out_with_pag_seguro: "Check out with PayPal"
+  pag_seguro_payment_received: "Thank you.. We received the payment for your order from PayPal. Your order will be shipped shortly"
+  pag_seguro_order_processed_successfully: "Thank you.. Your order processed succesfully. You will be notified once we receive the payment from PayPal"

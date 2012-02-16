@@ -1,0 +1,23 @@
+<% if @order.pag_seguro_payment %>
+
+<b><%= t("PagSeguro Transaction") %></b>
+
+  <table class="basic-table">
+    <tr>
+      <th><%= t("Amount") %></th>
+      <th><%= t("Fee") %></th>
+      <th><%= t("Status") %></th>
+      <th><%= t("Transaction Id") %></th>
+      <th><%= t("Received At") %></th>
+    </tr>
+    <% @order.pag_seguro_payment.txns.each do |t| %>
+      <tr>
+        <td><%=number_to_currency t.amount %></td>
+        <td><%=number_to_currency t.fee %></td>
+        <td><%=t.status %></td>
+        <td><%=t.transaction_id %></td>
+        <td><%=t.received_at %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
