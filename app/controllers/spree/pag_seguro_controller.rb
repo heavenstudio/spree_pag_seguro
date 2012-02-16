@@ -1,13 +1,14 @@
 module Spree
   class PagSeguroController < BaseController
     protect_from_forgery :except => [:notify]
+    skip_before_filter :restriction_access
     
     def notify
       notification = Spree::PaymentNotification.create_from_params(params)
       
       if notification.approved?
         Order.transaction do
-          order = Spree::Order.find(notification.id)
+          @order = Spree::Order.find(notification.id)
           
           #create payment for this order
           payment = Spree::Payment.new
@@ -17,13 +18,13 @@ module Spree
           # 2. Can't use Order#total, as it's intercepted by spree-multi-currency
           # which might lead to lots of false "credit owed" payment states
           # (when they should be "complete")
-          payment.amount = order.read_attribute(:total)
+          payment.amount = @order.read_attribute(:total)
           
           payment.payment_method = Spree::Order.pag_seguro_payment_method
-          order.payments << payment
+          @order.payments << payment
           payment.started_processing
           
-          order.payment.complete
+          @order.payment.complete
           
           until @order.state == "complete"
             if @order.next!
