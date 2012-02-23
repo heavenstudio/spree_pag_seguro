@@ -11,6 +11,8 @@ Adicione spree ao gemfile da sua aplicação, e também:
 Rode a task de instalação:
 
     rails generate spree_pag_seguro:install
+	
+Configure a url do sistema (utilizado para redirecionar o usuário de volta) em `Configuração -> Configurações Gerais -> URL do site`
 
 ## Configuração
 
