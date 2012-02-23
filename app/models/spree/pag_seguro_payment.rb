@@ -20,7 +20,7 @@ module Spree
           description: item.product.name,
           amount: format("%.2f", item.price.round(2)),
           quantity: item.quantity,
-          weight: ( item.product.weight * 1000 ).to_i
+          weight: ( item.product.weight.to_i * 1000 )
         )
       end
 
