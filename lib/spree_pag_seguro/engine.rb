@@ -9,10 +9,6 @@ module Spree
         end
       end
     
-      initializer "spree.pag_seguro.preferences", after: "spree.active_shipping.configuration" do |app|
-        Spree::PagSeguro::Config = Spree::PagSeguroConfiguration.new
-      end
-      
       initializer "spree.resgiter.pag_seguro_method", after: "spree.register.payment_methods" do |app|
         app.config.spree.payment_methods << Spree::PaymentMethod::PagSeguroMethod
       end

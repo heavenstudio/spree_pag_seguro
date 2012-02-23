@@ -3,6 +3,10 @@ module Spree
     preference :email, :string
     preference :token, :string
     
+    def payment_source_class
+      PagSeguroPayment
+    end
+    
     def actions
       %w{capture void}
     end
@@ -27,10 +31,6 @@ module Spree
       payment.update_attribute(:state, 'pending') if payment.state == 'checkout'
       payment.void
       true
-    end
-
-    def source_required?
-      false
     end
   end
 end
