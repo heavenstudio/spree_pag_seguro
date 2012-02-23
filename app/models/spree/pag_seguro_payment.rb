@@ -15,13 +15,13 @@ module Spree
         id: order.id)
 
       pag_seguro_payment.items = order.line_items.map do |item|
-        ::PagSeguro::Item.new(
-          id: item.id,
-          description: item.product.name,
-          amount: format("%.2f", item.price.round(2)),
-          quantity: item.quantity,
-          weight: ( item.product.weight.to_i * 1000 )
-        )
+        pag_seguro_item = ::PagSeguro::Item.new
+        pag_seguro_item.id = item.id
+        pag_seguro_item.description = item.product.name
+        pag_seguro_item.amount = format("%.2f", item.price.round(2))
+        pag_seguro_item.quantity = item.quantity
+        pag_seguro_item.weight = (item.product.weight * 1000).to_i if item.product.weight.present?
+        pag_seguro_item
       end
 
       pag_seguro_payment.sender = ::PagSeguro::Sender.new(name: order.name, email: order.email, phone_number: order.ship_address.phone)
