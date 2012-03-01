@@ -3,12 +3,6 @@ module Spree
     class Engine < Rails::Engine
       engine_name 'spree_pag_seguro'
     
-      initializer "spree.active_shipping.configuration", after: "spree.environment" do |app|
-        Dir.glob(File.join(File.dirname(__FILE__), "../../lib/spree_pag_seguro_configuration.rb")) do |c|
-          Rails.configuration.cache_classes ? require(c) : load(c)
-        end
-      end
-    
       initializer "spree.resgiter.pag_seguro_method", after: "spree.register.payment_methods" do |app|
         app.config.spree.payment_methods << Spree::PaymentMethod::PagSeguroMethod
       end
