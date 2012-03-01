@@ -3,7 +3,7 @@ module Spree
     class Engine < Rails::Engine
       engine_name 'spree_pag_seguro'
     
-      initializer "spree.resgiter.pag_seguro_method", after: "spree.register.payment_methods" do |app|
+      initializer "spree.register.pag_seguro_method", after: "spree.register.payment_methods" do |app|
         app.config.spree.payment_methods << Spree::PaymentMethod::PagSeguroMethod
       end
           
