@@ -12,6 +12,7 @@ module Spree
         Order.pag_seguro_payment_method.preferred_email,
         Order.pag_seguro_payment_method.preferred_token,
         redirect_url: redirect_url,
+        extra_amount: payment.order.shipment.amount,
         id: order.id)
 
       pag_seguro_payment.items = order.line_items.map do |item|

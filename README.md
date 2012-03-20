@@ -52,4 +52,4 @@ Caso queira contribuir, faça um fork desta gem no [github](https://github.com/h
 
 ## Sobre
 
-Desenvolvida por [Stefano Diem Benatti](mailto:stefano.diem@gmail.com)
+Desenvolvida por [Stefano Diem Benatti](mailto:stefano@heavenstudio.com.br)
