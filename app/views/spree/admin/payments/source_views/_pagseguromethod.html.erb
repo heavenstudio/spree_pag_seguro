@@ -4,20 +4,19 @@
   <table class="index">
     <tr>
       <th>Código de Transação no Pagseguro:</th>
-	  <th>Data de criação do pagamento:</th>
-	  <th>URL para efetuar o pagamento</th>
+      <th>Data de criação do pagamento:</th>
+      <th>URL para efetuar o pagamento</th>
     </tr>
     <tr>
       <td>
-		<% if payment.order.payment_notifications.present? %>
+        <% if payment.order.payment_notifications.present? %>
           <%= payment.order.payment_notifications.last.transaction_id  %>
-		<% else %>
-		  Sem Código
-		<% end %>
+        <% else %>
+          Sem Código
+        <% end %>
       </td>
-      <td><%= l payment.source.date %></td>
-	  <td><%= link_to PagSeguro::Payment.checkout_payment_url(payment.source.code) %></td>
+      <td><%= l payment.pag_seguro_payment.date %></td>
+      <td><%= link_to PagSeguro::Payment.checkout_payment_url(payment.pag_seguro_payment.code) %></td>
     </tr>
   </table>
 </fieldset>
-
