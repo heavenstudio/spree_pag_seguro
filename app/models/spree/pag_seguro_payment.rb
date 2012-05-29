@@ -1,7 +1,7 @@
 module Spree
   class PagSeguroPayment < ActiveRecord::Base
     attr_accessor :order_id
-    has_one :payment, :as => :source
+    belongs_to :payment
     
     def process!(payment)
       order = payment.order
@@ -12,7 +12,7 @@ module Spree
         Order.pag_seguro_payment_method.preferred_email,
         Order.pag_seguro_payment_method.preferred_token,
         redirect_url: redirect_url,
-        extra_amount: format("%.2f", payment.order.shipment.amount.round(2)),
+        extra_amount: format("%.2f", order.shipment.amount.round(2)),
         id: order.id)
 
       pag_seguro_payment.items = order.line_items.map do |item|
@@ -29,33 +29,8 @@ module Spree
       pag_seguro_payment.shipping = ::PagSeguro::Shipping.new(type: ::PagSeguro::Shipping::SEDEX, state: order.ship_address.state.abbr, city: order.ship_address.city, postal_code: order.ship_address.zipcode, street: order.ship_address.address1, complement: order.ship_address.address2)
       self.code = pag_seguro_payment.code
       self.date = pag_seguro_payment.date
+      self.payment = payment
       self.save
-    end
-    
-    def actions
-      %w{capture void}
-    end
-
-    # Indicates whether its possible to capture the payment
-    def can_capture?(payment)
-      ['processing', 'checkout', 'pending'].include?(payment.state)
-    end
-
-    # Indicates whether its possible to void the payment.
-    def can_void?(payment)
-      payment.state != 'void'
-    end
-
-    def capture(payment)
-      payment.update_attribute(:state, 'pending') if payment.state == 'checkout'
-      payment.complete
-      true
-    end
-
-    def void(payment)
-      payment.update_attribute(:state, 'pending') if payment.state == 'checkout'
-      payment.void
-      true
     end
   end
 end
