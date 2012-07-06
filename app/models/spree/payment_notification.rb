@@ -2,6 +2,7 @@ module Spree
   class PaymentNotification < ActiveRecord::Base
     belongs_to :order
     serialize :params
+    attr_protected
     
     def self.create_from_params(params)
       email = Order.pag_seguro_payment_method.preferred_email
