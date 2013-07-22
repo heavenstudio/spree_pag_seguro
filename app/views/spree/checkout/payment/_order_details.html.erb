@@ -3,6 +3,6 @@
     Seu pagamento foi aprovado pelo PagSeguro através da transação de código: <%= @order.payment_notifications.last.transaction_id if @order.payment_notifications.present? %>
   <% else %>
     Clique na imagem abaixo para realizar o pagamento através do Pag Seguro.
-    <%= link_to image_tag("pag_seguro_checkout.gif"), PagSeguro::Payment.checkout_payment_url(@order.payment_method.code(@order.payment)) %>
+    <%= link_to image_tag("pag_seguro_checkout.gif"), PagSeguro::Payment.checkout_payment_url(@order.payment_method.code(@order.payment)), :target => "_blank" %>
   <% end %>
 <% end %>

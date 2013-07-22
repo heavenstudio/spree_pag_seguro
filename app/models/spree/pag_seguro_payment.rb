@@ -1,6 +1,9 @@
 module Spree
   class PagSeguroPayment < ActiveRecord::Base
     attr_accessor :order_id
+
+    attr_accessible :order_id
+    
     belongs_to :payment
     
     def process!(payment)

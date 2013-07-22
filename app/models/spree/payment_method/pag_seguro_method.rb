@@ -30,8 +30,18 @@ module Spree
     end
     
     def payment_source_class
-      self.class
+      #self.class
+      Spree::PagSeguroPayment
     end
+
+    def provider_class
+      self.class
+
+    end
+
+    # def method_type
+    #   'pagseguromethod'
+    # end      
 
     def source_required?
       false
